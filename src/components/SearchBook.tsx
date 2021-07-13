@@ -1,3 +1,10 @@
+import React, {
+  useState,
+  forwardRef,
+  ElementType,
+  ForwardRefRenderFunction,
+} from "react";
+
 import {
   Flex,
   Icon,
@@ -5,13 +12,30 @@ import {
   InputGroup,
   InputLeftElement,
   InputRightElement,
+  Input as ChakraInput,
+  InputProps as ChakraInputProps,
 } from "@chakra-ui/react";
-import Image from "next/image";
 import { RiSearchLine } from "react-icons/ri";
 
-const SearchBook = ({ setOnFocusToSearch }) => {
+interface InputProps extends ChakraInputProps {
+  setOnFocusToSearch: (onFocusToSearch: boolean) => void;
+  setOnSearch: (onSearch: string) => void;
+}
+
+const SearchBook: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
+  { setOnFocusToSearch, setOnSearch }: InputProps,
+  ref
+) => {
+  const handleSearch = (e) => {};
+
   return (
-    <Flex position="fixed" pt="50px" width="100%">
+    <Flex
+      mr="20px"
+      pt="50px"
+      flex="1"
+      width={["336px", "100%", "1024px"]}
+      position="fixed"
+    >
       <InputGroup>
         <InputLeftElement
           mt="6px"
@@ -20,7 +44,7 @@ const SearchBook = ({ setOnFocusToSearch }) => {
           fontSize="1.2em"
           pointerEvents="none"
         >
-          <Image
+          <ChakraInput
             src="/images/search.svg"
             alt="Search Icon"
             width="16px"
@@ -29,28 +53,21 @@ const SearchBook = ({ setOnFocusToSearch }) => {
         </InputLeftElement>
         <Input
           size="lg"
+          onBlur={() => setOnFocusToSearch(false)}
+          onFocus={() => setOnFocusToSearch(true)}
           bgColor="red.100"
+          onChange={(e) => setOnSearch(e.target.value)}
+          boxShadow="5px 5px 80px rgba(212, 173, 134, 0.122623)"
           maxLength={90}
-          borderRadius="10px"
           placeholder="Search Book"
+          borderRadius="10px"
           _placeholder={{
             fontSize: "16px",
             lineHeight: "18px",
             color: "gray.500",
             marginLeft: "-12px",
           }}
-          boxShadow="5px 5px 80px rgba(212, 173, 134, 0.122623)"
           focusBorderColor="none"
-          onChange={(e) => {
-            console.log(e);
-          }}
-          onFocus={(e) => {
-            console.log("testes", e);
-            setOnFocusToSearch(true);
-          }}
-          onMouseLeave={(e) => {
-            setOnFocusToSearch(false);
-          }}
         />
         {false && (
           <InputRightElement>
