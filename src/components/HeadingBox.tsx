@@ -1,15 +1,16 @@
-import { Flex, Text, Heading } from "@chakra-ui/react";
+import { ForwardRefRenderFunction } from "react";
+import { Flex, Text, Heading, FlexProps } from "@chakra-ui/react";
 
-interface HeadingBoxProps {
+interface HeadingBoxProps extends FlexProps {
   title: string;
   actionTitle: string;
 }
 
-const HeadingBox = ({ title, actionTitle }: HeadingBoxProps) => {
+const HeadingBox = ({ title, actionTitle }: HeadingBoxProps, refs) => {
   return (
-    <Flex justify="space-between">
+    <Flex justify="space-between" {...refs}>
       <Heading
-        color="gray.800"
+        color="gray.700"
         fontSize="18px"
         fontWeight="500"
         letterSpacing="0.5px"
