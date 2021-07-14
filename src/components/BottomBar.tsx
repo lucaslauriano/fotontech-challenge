@@ -22,7 +22,7 @@ const BottomBar = () => {
               height="16px"
             />
             <Heading
-              color="gray.900"
+              color="gray.800"
               fontSize="10px"
               fontStyle="normal"
               fontWeight="400"
