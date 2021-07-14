@@ -1,19 +1,15 @@
+import Link from "next/link";
 import {
   Box,
-  Grid,
-  Flex,
-  Button,
-  Stack,
-  Center,
-  Heading,
-  Divider,
-  Container,
-  Image as ChakraImage,
   Text,
+  Grid,
+  Heading,
+  Image as ChakraImage,
 } from "@chakra-ui/react";
-import { Book } from "../../types/Book";
-import Link from "next/link";
 
+import getAutors from "../../utils/getAuthors";
+
+import { Book } from "../../types/Book";
 interface ListBooksViewProps {
   books: Book[];
 }
@@ -62,7 +58,8 @@ const ListBooksView = ({ books }: ListBooksViewProps) => {
                   fontWeight="900"
                   isTruncated
                 >
-                  {item?.volumeInfo?.authors}
+                  {item?.volumeInfo.authors &&
+                    `by ${getAutors(item?.volumeInfo?.authors)}`}
                 </Text>
               </Box>
             </Box>

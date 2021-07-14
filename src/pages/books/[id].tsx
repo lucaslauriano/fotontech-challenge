@@ -1,20 +1,11 @@
-import { ReactNode, useMemo } from "react";
-import {
-  Flex,
-  Box,
-  Image as ChakraImage,
-  Center,
-  Heading,
-  Divider,
-  Link,
-  Container,
-  Stack,
-} from "@chakra-ui/react";
+import { ReactNode, useEffect, useState } from "react";
 import { useRouter } from "next/dist/client/router";
-import { useEffect, useState } from "react";
+import { Box, Flex, Heading, Image as ChakraImage } from "@chakra-ui/react";
+
 import { api } from "../../services/axios";
-import axios from "axios";
+import getAutors from "../../utils/getAuthors";
 import { Book as BookProps } from "../../types/Book";
+
 import FloatingBar from "../../components/FloatingBar";
 
 const HeadingTitle = ({ children }: { children: ReactNode }) => (
@@ -35,30 +26,17 @@ const Book = () => {
   const [book, setBook] = useState<BookProps>();
   const { id } = router.query;
 
-  const getAutors = (autors) => {
-    if (autors.length > 1)
-      return autors.slice(0, -1).join(", ") + " & " + autors.slice(-1);
-    return autors[0];
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      const resp = await api.get(`/volumes?q=${id}`);
+      setBook(resp.data.items);
+    };
+
     if (!!id) {
-      const getBooks = () => {
-        axios
-          .request({
-            method: "get",
-            url: "https://www.googleapis.com/books/v1/volumes?q=" + id,
-          })
-          .then((response) => {
-            setBook(response.data.items[0]);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      };
-      getBooks();
+      fetchData();
     }
   }, [id]);
+
   return (
     <Flex direction="column" w="100vw" h="100vh">
       <Box
@@ -89,7 +67,7 @@ const Book = () => {
               width="151px"
               height="234px"
               align={"center"}
-              fallbackSrc="https://via.placeholder.com/150"
+              fallbackSrc="/images/bookmockup.jpg"
               borderRadius="5px"
             />
           </Box>

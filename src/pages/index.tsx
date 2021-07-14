@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { Box, Flex, Skeleton, Grid, Button } from "@chakra-ui/react";
+import { useCallback, useEffect, useState } from "react";
+import { Box, Flex, Skeleton, Grid, Button, Text } from "@chakra-ui/react";
 
+import { api } from "../services/axios";
 import { Book } from "../types/Book";
+
 import HelloUser from "../components/HelloUser";
 import BottomBar from "../components/BottomBar";
 import SearchBook from "../components/SearchBook";
-import CurrentlyReadingSection from "../components/CurrentlyReadingSection";
-import DiscoverNewBookSection from "../components/DiscoverNewBookSection";
 import VideoReviewsSection from "../components/VideoReviewsSection";
+import DiscoverNewBookSection from "../components/DiscoverNewBookSection";
+import CurrentlyReadingSection from "../components/CurrentlyReadingSection";
+
 import ListBooksView from "./books/ListBooksView";
 
 const Home = () => {
@@ -16,27 +18,29 @@ const Home = () => {
   const [onSearch, setOnSearch] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [onFocusToSearch, setOnFocusToSearch] = useState(false);
+  const [maxResults, setMaxResults] = useState(10);
+  const [startIndex, setStartIndex] = useState(0);
+  const [totalItems, setTotalItems] = useState(0);
 
   useEffect(() => {
+    const fetchData = async () => {
+      const resp = await api.get(
+        `/volumes?q=${onSearch}&maxResults=${maxResults}&startIndex=${startIndex}`
+      );
+      setBooks(resp.data.items);
+      setTotalItems(resp.data.totalItems);
+      setIsLoading(false);
+    };
+
     if (!!onSearch) {
-      const getBooks = () => {
-        axios
-          .request({
-            method: "get",
-            url: "https://www.googleapis.com/books/v1/volumes?q=" + onSearch,
-          })
-          .then((response) => {
-            console.log("books", response.data.items);
-            setBooks(response.data.items);
-            setIsLoading(false);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      };
-      getBooks();
+      fetchData();
     }
-  }, [onSearch]);
+  }, [onSearch, maxResults, startIndex]);
+
+  const handleChange = useCallback(() => {
+    setStartIndex(startIndex + maxResults);
+    setMaxResults((prev) => prev + 10);
+  }, [startIndex, maxResults]);
 
   return (
     <Flex direction="column" w="100vw" h="100vh">
@@ -91,8 +95,14 @@ const Home = () => {
         ) : (
           <>
             <ListBooksView books={books} />
-            <Box mt="15px" height="200px" bg="blue.400">
-              <Button>Load More</Button>
+            <Box mt="25px" height="200px">
+              <Button onClick={handleChange}>Load More</Button>
+
+              <Box>
+                <Text>
+                  {maxResults} - {totalItems}
+                </Text>
+              </Box>
             </Box>
           </>
         )}
