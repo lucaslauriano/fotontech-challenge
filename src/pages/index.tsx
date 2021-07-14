@@ -1,22 +1,21 @@
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import axios from "axios";
-
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, Skeleton, Grid, Button } from "@chakra-ui/react";
 
 import { Book } from "../types/Book";
 import HelloUser from "../components/HelloUser";
 import BottomBar from "../components/BottomBar";
 import SearchBook from "../components/SearchBook";
-import HeadingBox from "../components/HeadingBox";
 import CurrentlyReadingSection from "../components/CurrentlyReadingSection";
 import DiscoverNewBookSection from "../components/DiscoverNewBookSection";
 import VideoReviewsSection from "../components/VideoReviewsSection";
+import ListBooksView from "./books/ListBooksView";
 
 const Home = () => {
-  const [onFocusToSearch, setOnFocusToSearch] = useState(false);
-  const [onSearch, setOnSearch] = useState("");
   const [books, setBooks] = useState<Book[]>([]);
+  const [onSearch, setOnSearch] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [onFocusToSearch, setOnFocusToSearch] = useState(false);
 
   useEffect(() => {
     if (!!onSearch) {
@@ -28,6 +27,8 @@ const Home = () => {
           })
           .then((response) => {
             console.log("books", response.data.items);
+            setBooks(response.data.items);
+            setIsLoading(false);
           })
           .catch((error) => {
             console.log(error);
@@ -52,7 +53,7 @@ const Home = () => {
           setOnFocusToSearch={setOnFocusToSearch}
         />
 
-        {!onFocusToSearch && (
+        {!onFocusToSearch ? (
           <>
             <HelloUser />
 
@@ -61,9 +62,41 @@ const Home = () => {
             <CurrentlyReadingSection />
 
             <VideoReviewsSection />
-            <BottomBar />
+          </>
+        ) : isLoading || onSearch === "" ? (
+          <Grid
+            mt="140px"
+            gap={6}
+            templateColumns={["repeat(3, 1fr)", "repeat(5, 1fr)"]}
+          >
+            <Skeleton
+              w="91px"
+              h="136px"
+              startColor="gray.400"
+              endColor="gray.300"
+            />
+            <Skeleton
+              w="91px"
+              h="136px"
+              startColor="gray.400"
+              endColor="gray.300"
+            />
+            <Skeleton
+              w="91px"
+              h="136px"
+              startColor="gray.400"
+              endColor="gray.300"
+            />
+          </Grid>
+        ) : (
+          <>
+            <ListBooksView books={books} />
+            <Box mt="15px" height="200px" bg="blue.400">
+              <Button>Load More</Button>
+            </Box>
           </>
         )}
+        <BottomBar />
       </Box>
     </Flex>
   );
