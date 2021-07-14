@@ -15,15 +15,16 @@ import {
   InputRightElement,
   InputProps as ChakraInputProps,
 } from "@chakra-ui/react";
-import { RiSearchLine } from "react-icons/ri";
+import { RiCloseLine, RiSearchLine } from "react-icons/ri";
 
 interface InputProps extends ChakraInputProps {
-  setOnFocusToSearch: (onFocusToSearch: boolean) => void;
+  onSearch: string;
   setOnSearch: (onSearch: string) => void;
+  setOnFocusToSearch: (onFocusToSearch: boolean) => void;
 }
 
 const SearchBook: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
-  { setOnFocusToSearch, setOnSearch }: InputProps,
+  { setOnFocusToSearch, setOnSearch, onSearch }: InputProps,
   refs
 ) => {
   const handleSearch = (e) => {};
@@ -35,6 +36,7 @@ const SearchBook: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
       flex="1"
       width={["336px", "100%", "1024px"]}
       position="fixed"
+      zIndex="2"
     >
       <InputGroup>
         <InputLeftElement
@@ -56,7 +58,10 @@ const SearchBook: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
           size="lg"
           /*  onBlur={() => setOnFocusToSearch(false)} */
           color="black"
+          fontSize="16px"
           fontWeight="700"
+          lineHeight="18px"
+          value={onSearch}
           bgColor="red.100"
           onFocus={() => setOnFocusToSearch(true)}
           onChange={(e) => setOnSearch(e.target.value)}
@@ -74,9 +79,15 @@ const SearchBook: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
           }}
           focusBorderColor="none"
         />
-        {false && (
+        {!!onSearch && (
           <InputRightElement>
-            <Icon as={RiSearchLine} fontSize="20" mt="2px" />
+            <Icon
+              mt="8px"
+              as={RiCloseLine}
+              color="gray.400"
+              fontSize="20"
+              onClick={() => setOnSearch("")}
+            />
           </InputRightElement>
         )}
       </InputGroup>

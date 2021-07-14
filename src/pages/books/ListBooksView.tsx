@@ -29,32 +29,37 @@ const ListBooksView = ({ books }: ListBooksViewProps) => {
             href={`/books/${item.id}`}
             passHref
           >
-            <Box
-              w="100%"
-              style={{
-                filter: "dropShadow(0px 2px 4px rgba(229, 229, 229, 0.5))",
-              }}
-              borderRadius="10px"
-            >
+            <Box as="div">
               <ChakraImage
                 src={item?.volumeInfo?.imageLinks?.thumbnail}
                 alt="tets"
-                width="91px"
-                height="136px"
+                width="99px"
+                height="153px"
+                filter="drop-shadow(0px 2px 4px rgba(229, 229, 229, 0.5))"
                 objectFit="cover"
                 fallbackSrc="/images/bookmockup.jpg"
                 borderRadius="5px"
               />
               <Box width="91px" mt="10px">
-                <Heading fontSize="12px" fontWeight="700" isTruncated>
+                <Heading
+                  color="gray.800"
+                  opacity="0.8"
+                  fontSize="12px"
+                  fontWeight="700"
+                  lineHeight="14.32px"
+                  isTruncated
+                >
                   {item?.volumeInfo?.title}
                 </Heading>
               </Box>
               <Box width="91px" mt="2px">
                 <Text
                   align="start"
+                  color="gray.800"
+                  opacity="0.8"
                   fontSize="10px"
                   fontFamily="Roboto"
+                  lineHeight="11.72px"
                   fontWeight="900"
                   isTruncated
                 >
