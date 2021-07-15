@@ -5661,6 +5661,13 @@ react-swipr@^2.0.6:
   dependencies:
     hammerjs "~2.0.4"
 
+react-touch-carousel@^0.9.4:
+  version "0.9.4"
+  resolved "https://registry.yarnpkg.com/react-touch-carousel/-/react-touch-carousel-0.9.4.tgz#2a993736fb2397d8ab182affaa6cba304dfdbe9a"
+  integrity sha512-k5856HSm7oqqEvyX7GmEpuBFrTb2GsAcTvxGG8b2oOe7T4O25TGQeJwqKkIsmbd8r3x969lAcfOeoKQm7x13/g==
+  dependencies:
+    react-spring "^8.0.27"
+
 react@17.0.2:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react/-/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"

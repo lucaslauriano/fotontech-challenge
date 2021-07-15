@@ -18,15 +18,10 @@
     "axios": "^0.21.1",
     "framer-motion": "^4.1.17",
     "next": "11.0.1",
-    "popmotion": "^9.4.0",
-    "pure-react-carousel": "^1.27.6",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-icons": "^4.2.0",
-    "react-leaf-carousel": "^2.0.3",
-    "react-query": "^3.16.0",
-    "react-slidy": "^4.3.2",
-    "react-swipr": "^2.0.6",
+    "react-touch-carousel": "^0.9.4",
     "yup": "^0.32.9"
   },
   "devDependencies": {

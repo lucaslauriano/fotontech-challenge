@@ -8,8 +8,8 @@ interface NewBookBannerProps extends BoxProps {
 const NewBookBanner = ({ book, isFocused }: NewBookBannerProps, refs) => {
   return (
     <Box
-      w={isFocused ? "272px" : "250px"}
-      h={isFocused ? "139px" : "128px"}
+      w="272px"
+      h="139px"
       mt="15px"
       bg="blue.800"
       color="white"
