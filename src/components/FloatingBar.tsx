@@ -21,7 +21,13 @@ const FloatingBar = () => {
       borderRadius="2px"
     >
       <Center h="56px">
-        <Stack width="100%" spacing="30px" direction="row">
+        <Stack
+          width="100%"
+          height="20px"
+          spacing={["30px", "10%"]}
+          direction="row"
+          justify="center"
+        >
           <Flex>
             <ChakraImage
               src="/images/book-open.svg"
@@ -39,7 +45,7 @@ const FloatingBar = () => {
               Read
             </Heading>
           </Flex>
-          <Divider orientation="vertical" />
+          <Divider orientation="vertical" colorScheme="gray" />
           <Flex>
             <ChakraImage
               src="/images/headphones.svg"
@@ -57,7 +63,7 @@ const FloatingBar = () => {
               Listen
             </Heading>
           </Flex>
-          <Divider orientation="vertical" />
+          <Divider orientation="vertical" colorScheme="gray" />
           <Flex>
             <ChakraImage
               src="/images/share.svg"
