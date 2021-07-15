@@ -27,41 +27,22 @@ const HeadingTitle = ({ children }: { children: ReactNode }) => (
 const Book = () => {
   const router = useRouter();
   const [book, setBook] = useState<BookProps>();
-  const [description, setDescription] = useState<string>();
+  const [description, setDescription] = useState<string[]>();
   const { id } = router.query;
 
   useEffect(() => {
     const fetchData = async () => {
       const resp = await api.get(`volumes/${id}`);
       setBook(resp.data);
-      const description = resp.data.volumeInfo.description.replace(
-        /<\/?[^>]+(>|$)/g,
-        ""
+      const description = _.split(
+        resp.data.volumeInfo.description.replace(/<\/?[^>]+(>|$)/g, ""),
+        "."
       );
+      console.log(description);
       setDescription(description);
     };
     fetchData();
   }, [id]);
-
-  const getDescription = () => {
-    const str = _.split(description, ".");
-    return str.map((item, index) => (
-      <Box key={index}>
-        <Text
-          pt="15px"
-          fontFamily="SF Pro Text"
-          size="14px"
-          opacity="0.6"
-          color="gray.800"
-          letter="0.2px"
-          justify="flex-start"
-          lineHeight="25px"
-        >
-          {item}
-        </Text>
-      </Box>
-    ));
-  };
 
   return (
     <Flex direction="column" w="100vw" h="100vh">
@@ -191,8 +172,28 @@ const Book = () => {
             {book?.volumeInfo?.authors && getAutors(book.volumeInfo.authors)}
           </Heading>
         </Box>
-        <Box mt="5px">{getDescription()}</Box>
-        <FloatingBar />
+        <Box mb="60px">
+          {description &&
+            description.map((item, index) => (
+              <Text
+                key={index}
+                pt="15px"
+                px="20px"
+                fontFamily="SF Pro Text"
+                size="14px"
+                opacity="0.6"
+                color="gray.800"
+                letter="0.2px"
+                textAlign="justify"
+                lineHeight="25px"
+              >
+                {item}.
+              </Text>
+            ))}
+        </Box>
+        <Box mt="5px">
+          <FloatingBar />
+        </Box>
       </Box>
     </Flex>
   );
