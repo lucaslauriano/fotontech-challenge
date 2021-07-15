@@ -121,7 +121,7 @@ const Home = () => {
               />
             </Grid>
             <Button
-              mt="15px"
+              mt="30px"
               size="sm"
               variant="solid"
               color="gray.500"

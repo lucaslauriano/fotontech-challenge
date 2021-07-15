@@ -3,7 +3,7 @@ import HeadingBox from "./HeadingBox";
 
 const VideoReviewsSection = () => {
   return (
-    <Box mt="25px">
+    <Box mt="25px" h="281px">
       <HeadingBox title="Reviews of The Days" actionTitle=" Al Video" />
       <Flex mt="10px">
         <Image
